@@ -19,4 +19,6 @@
    - its improved performance.
 
 ### 5. What is the difference between preventDefault() and stopPropagation() methods?
+    Answer: Prevents the default browser behavior associated with an event but stopPropagation() prevents the event from continuing to travel through the DOM (bubbling or capturing).
+
     
