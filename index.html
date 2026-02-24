@@ -132,8 +132,75 @@
         function render() {
             const container = document.getElementById('jobList');
             const filtered = jobsData.filter(j => currentTab === 'all' ? true : j.status === currentTab);
+            document.getElementById('stat-total').innerText = jobsData.length;
+            document.getElementById('stat-interview').innerText = jobsData.filter(j => j.status === 'interview').length;
+            document.getElementById('stat-rejected').innerText = jobsData.filter(j => j.status === 'rejected').length;
+            document.getElementById('jobs-count').innerText = filtered.length;
+            
+            container.innerHTML = '';
+
+            if (filtered.length === 0) {
+                
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-24 px-6 animate-fade text-center max-w-md mx-auto">
+                        <div class="relative mb-8">
+                            <div class="w-24 h-24 bg-bgLight rounded-full flex items-center justify-center icon-pulse">
+                          <img src="./jobs.png" class="w-12 h-12 object-contain">
+                          </div>
+                            <div class="absolute -top-1 -right-1 w-6 h-6 bg-brandRed rounded-full border-4 border-white"></div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-black text-brandBlue mb-2 tracking-tight">No Jobs Available</h3>
+                        <p class="text-sm font-medium text-textGray mb-8">
+                            Check back soon for new job opportunities.
+                        </p>
+                        
+                       
+                    </div>`;
+            } else {
+                filtered.forEach(job => {
+                    container.innerHTML += `
+                        <div class="job-row py-8 flex flex-col animate-fade">
+                            <button onclick="deleteJob(${job.id})" class="absolute top-4 right-0 text-textGray hover:text-brandRed transition-colors p-1" title="Remove">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            </button>
+                            <div class="pr-10">
+                                <h3 class="text-xl font-bold text-brandBlue tracking-tight mb-1">${job.company}</h3>
+                               <h4 class="text-sm font-medium text-black text-black mb-2 tracking-tight">${job.pos}</h4>
+                                <div class="flex flex-wrap items-center gap-3 text-[10px] text-black tracking-tight mb-3">
+                                <span>${job.loc}</span> 
+                                <span>.</span> 
+                             <span>${job.type}</span> 
+                             <span>.</span> 
+                             <span>${job.sal}</span> </div>
+
+                                <button onclick="toggleApplied(${job.id})" 
+                                class="mb-4 px-3 py-1 rounded-md text-xs font-black uppercase tracking-tight transition-all border
+                                ${job.applied ? 'bg-brandPurple border-brandPurple text-white' : 'border-textGray/30 text-textGray hover:border-brandPurple hover:text-brandPurple'}">
+                                ${job.applied ? '✓ Applied' : 'Not Applied'} </button>
+
+                                <p class="text-sm font-medium text-gray-700 mb-6 leading-relaxed max-w-3xl">${job.desc}</p>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="updateStatus(${job.id}, 'interview')" 
+                                        class="px-5 py-2.5 rounded-lg border border-brandGreen text-[10px] font-black tracking-widest transition-all uppercase 
+                                        ${job.status === 'interview' ? 'bg-brandGreen text-white' : 'text-brandGreen hover:bg-brandGreen hover:text-white'}">
+                                        Interview
+                                    </button>
+                                    <button onclick="updateStatus(${job.id}, 'rejected')" 
+                                        class="px-5 py-2.5 rounded-lg border border-brandRed text-[10px] font-black tracking-widest transition-all uppercase
+                                        ${job.status === 'rejected' ? 'bg-brandRed text-white' : 'text-brandRed hover:bg-brandRed hover:text-white'}">
+                                        Rejected
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
         }
-    </script>    
-   
+
+        render();
+    </script> 
 </body>
 </html>
