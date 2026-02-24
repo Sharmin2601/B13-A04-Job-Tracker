@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Tracker | Responsive Empty State</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,8 +29,9 @@
         .active-tab { color: #3B82F6; border-bottom: 4px solid #3B82F6; }
         .job-row { border-bottom: 1px solid #E9EDF7; position: relative; }
         .job-row:last-child { border-bottom: none; }
-       
-       </style>
+        .animate-fade { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
 
 <body class="bg-bgLight min-h-screen font-sans antialiased p-4 md:p-10">
@@ -53,94 +54,57 @@
                 </div>
             </div>
         </header>
+
         <section>
             <div class="flex justify-between items-end mb-8">
                 <div>
                     <h2 class="text-2xl font-bold text-brandBlue tracking-tight">Available Jobs</h2>
-                
                 </div>
                 <div class="text-right flex justify-between items-end gap-2">
                     <span id="jobs-count" class="text-sm leading-relaxed font-medium font-black text-textGray mb-1">0</span>
                     <span class="text-sm leading-relaxed font-black font-medium text-textGray mb-1">jobs</span>
-                    
                 </div>
             </div>
 
-            
-                <div class="flex gap-3 mb-6 justify-start">
-    <button onclick="switchTab('all')" id="tab-all"
-    class="px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-blue-500 text-white">
-    All
-</button>
-
-    <button onclick="switchTab('interview')" id="tab-interview"
-    class="px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-gray-100 text-gray-600">
-    Interview
-</button>
-
-<button onclick="switchTab('rejected')" id="tab-rejected"
-    class="px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-gray-100 text-gray-600">
-    Rejected
-</button>
-</div>
-
-                <div id="jobList" class="flex flex-col h-full justify-center">
-                    </div>
+            <div class="flex gap-4 mb-6 border-b border-gray-200">
+                <button id="tab-all" onclick="switchTab('all')" class="pb-2 px-2 text-sm font-bold uppercase tracking-tight transition-all active-tab">All</button>
+                <button id="tab-interview" onclick="switchTab('interview')" class="pb-2 px-2 text-sm font-bold uppercase tracking-tight transition-all text-textGray hover:text-brandBlue">Interview</button>
+                <button id="tab-rejected" onclick="switchTab('rejected')" class="pb-2 px-2 text-sm font-bold uppercase tracking-tight transition-all text-textGray hover:text-brandBlue">Rejected</button>
             </div>
+
+            <div id="jobList" class="flex flex-col h-full justify-center">
+                </div>
         </section>
     </div>
+
     <script>
         const initialJobs = [
-            { id: 1, company: "Mobile First Corp", pos: "React Native Developer", loc: "Remote", type: "Full-time", sal: "$30,000-$17,5000", desc: "Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.", status: 'all', applied: false },
-            { id: 2, company: "WebFlow Agency", pos: "Web Designer & Developer", loc: "Los Angeles, CA", type: "Part-time", sal: "$80,000-$120,000", desc: "Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends.", status: 'all', applied: false },
-            { id: 3, company: "DataViz Solutions", pos: "Data Visualization Specialist", loc: "Boston, MA", type: "Full-time", sal: "$125,000 - $165,000", desc: "Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.", status: 'all', applied: false },
-            { id: 4, company: "CloudFirst Inc", pos: "Backend Developer", loc: "Seattle, WA", type: "Full-time", sal: "$140,000 - $190,000", desc: "Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps practices and cloud infrastructure.", status: 'all', applied: false },
-            { id: 5, company: "Innovation Labs", pos: "UI/UX Engineer", loc: "Austin, TX", type: "Full-time", sal: "$110,000 - $150,000", desc: "Create beautiful and functional user interfaces for our suite of products. Strong design skills and frontend development expertise required.", status: 'all', applied: false },
-            { id: 6, company: "MegaCorp Solutions", pos: "JavaScript Developer", loc: "New York, NY", type: "Full-time", sal: "$130,000 - $170,00", desc: "Build enterprise applications with JavaScript and modern frameworks. We offer competitive compensation, health insurance, and professional development opportunities.", status: 'all', applied: false },
-            { id: 7, company: "StartupXYZ", pos: "Full Stack Engineer", loc: "Remote", type: "Full-time", sal: "$120,00-$160,000", desc: "Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.", status: 'all', applied: false },
-            { id: 8, company: "TechCorp Industries", pos: "Senior Frontend Developer", loc: "San Francisco, CA", type: "Full-time", sal: "$130,000 - $175,000", desc: "We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.", status: 'all', applied: false }
+            { id: 1, company: "Mobile First Corp", pos: "React Native Developer", loc: "Remote", type: "Full-time", sal: "$30,000-$17,5000", desc: "Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.", status: 'all' },
+            { id: 2, company: "WebFlow Agency", pos: "Web Designer & Developer", loc: "Los Angeles, CA", type: "Part-time", sal: "$80,000-$120,000", desc: "Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends.", status: 'all' },
+            { id: 3, company: "DataViz Solutions", pos: "Data Visualization Specialist", loc: "Boston, MA", type: "Full-time", sal: "$125,000 - $165,000", desc: "Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.", status: 'all' },
+            { id: 4, company: "CloudFirst Inc", pos: "Backend Developer", loc: "Seattle, WA", type: "Full-time", sal: "$140,000 - $190,000", desc: "Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps practices and cloud infrastructure.", status: 'all' },
+            { id: 5, company: "Innovation Labs", pos: "UI/UX Engineer", loc: "Austin, TX", type: "Full-time", sal: "$110,000 - $150,000", desc: "Create beautiful and functional user interfaces for our suite of products. Strong design skills and frontend development expertise required.", status: 'all' },
+            { id: 6, company: "MegaCorp Solutions", pos: "JavaScript Developer", loc: "New York, NY", type: "Full-time", sal: "$130,000 - $170,00", desc: "Build enterprise applications with JavaScript and modern frameworks. We offer competitive compensation, health insurance, and professional development opportunities.", status: 'all' },
+            { id: 7, company: "StartupXYZ", pos: "Full Stack Engineer", loc: "Remote", type: "Full-time", sal: "$120,00-$160,000", desc: "Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.", status: 'all' },
+            { id: 8, company: "TechCorp Industries", pos: "Senior Frontend Developer", loc: "San Francisco, CA", type: "Full-time", sal: "$130,000 - $175,000", desc: "We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.", status: 'all' }
         ];
+
         let jobsData = [...initialJobs];
         let currentTab = 'all';
 
-       function switchTab(tab) {
-    currentTab = tab;
-
-    const tabs = ['all', 'interview', 'rejected'];
-
-    tabs.forEach(t => {
-        const btn = document.getElementById(`tab-${t}`);
-
-        // ❌ DO NOT reset full className
-        btn.classList.remove(
-            'bg-blue-500', 'bg-green-500', 'bg-red-500',
-            'text-white', 'bg-gray-100', 'text-gray-600'
-        );
-
-        if (t === tab) {
-            if (t === 'all') {
-                btn.classList.add('bg-blue-500', 'text-white');
-            } else if (t === 'interview') {
-                btn.classList.add('bg-green-500', 'text-white');
-            } else if (t === 'rejected') {
-                btn.classList.add('bg-red-500', 'text-white');
-            }
-        } else {
-            btn.classList.add('bg-gray-100', 'text-gray-600');
-        }
-    });
-
-    render();
-}
-
-        function deleteJob(id) {
-            jobsData = jobsData.filter(job => job.id !== id);
-            render();
-        }
-
-        function toggleApplied(id) {
-            const job = jobsData.find(j => j.id === id);
-            if (job) job.applied = !job.applied;
+        function switchTab(tab) {
+            currentTab = tab;
+            const tabs = ['all', 'interview', 'rejected'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tab) {
+                    btn.classList.add('active-tab');
+                    btn.classList.remove('text-textGray');
+                } else {
+                    btn.classList.remove('active-tab');
+                    btn.classList.add('text-textGray');
+                }
+            });
             render();
         }
 
@@ -152,43 +116,55 @@
             render();
         }
 
-        function resetJobs() {
-            jobsData = [...initialJobs];
+        function deleteJob(id) {
+            jobsData = jobsData.filter(job => job.id !== id);
             render();
         }
 
         function render() {
             const container = document.getElementById('jobList');
-           let filtered = jobsData.filter(j => currentTab === 'all' ? true : j.status === currentTab);
+            
+            // Logic: On "All" tab, show all jobs until EVERY job is either 'interview' or 'rejected'
+            const allProcessed = jobsData.length > 0 && jobsData.every(j => j.status !== 'all');
+            
+            let filtered;
+            if (currentTab === 'all') {
+                filtered = allProcessed ? [] : jobsData;
+            } else {
+                filtered = jobsData.filter(j => j.status === currentTab);
+            }
 
-           const allApplied = jobsData.length > 0 && jobsData.every(j => j.applied);
-           if (allApplied) {    filtered = [];}
             document.getElementById('stat-total').innerText = jobsData.length;
             document.getElementById('stat-interview').innerText = jobsData.filter(j => j.status === 'interview').length;
             document.getElementById('stat-rejected').innerText = jobsData.filter(j => j.status === 'rejected').length;
             document.getElementById('jobs-count').innerText = filtered.length;
-            
+
             container.innerHTML = '';
 
             if (filtered.length === 0) {
-                
                 container.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-36 px-12 text-center max-w-md mx-auto">
                         <div class="relative mb-8">
                             <div class="bg-bgLight rounded-full flex items-center justify-center icon-pulse">
-                          <img src="./jobs.png" class="w-12 h-12 object-contain">
-                          </div>
-                          </div>
-                        
+                                <img src="./jobs.png" class="w-12 h-12 object-contain">
+                            </div>
+                        </div>
                         <h3 class="text-xl font-black text-brandBlue mb-2 tracking-tight">No Jobs Available</h3>
-                        <p class="text-sm font-medium text-textGray mb-8">
-                            Check back soon for new job opportunities.
-                        </p>
-                        
-                       
+                        <p class="text-sm font-medium text-textGray mb-8">Check back soon for new job opportunities.</p>
                     </div>`;
             } else {
                 filtered.forEach(job => {
+                    let badgeText = "Not Applied";
+                    let badgeClass = "bg-gray-50 text-black border-gray-200 shadow-sm hover:bg-gray-100";
+                    
+                    if (job.status === 'interview') {
+                        badgeText = "Interview";
+                        badgeClass = "bg-brandGreen text-white border-brandGreen";
+                    } else if (job.status === 'rejected') {
+                        badgeText = "Rejected";
+                        badgeClass = "bg-brandRed text-white border-brandRed";
+                    }
+
                     container.innerHTML += `
                         <div class="job-row py-8 flex flex-col animate-fade">
                             <button onclick="deleteJob(${job.id})" class="absolute top-4 right-0 text-textGray hover:text-brandRed transition-colors p-1" title="Remove">
@@ -196,19 +172,14 @@
                             </button>
                             <div class="pr-10">
                                 <h3 class="text-xl font-bold text-brandBlue tracking-tight mb-1">${job.company}</h3>
-                               <h4 class="text-sm font-medium text-black text-black mb-2 tracking-tight">${job.pos}</h4>
+                                <h4 class="text-sm font-medium text-black mb-2 tracking-tight">${job.pos}</h4>
                                 <div class="flex flex-wrap items-center gap-3 text-[10px] text-black tracking-tight mb-3">
-                                <span>${job.loc}</span> 
-                                <span>.</span> 
-                             <span>${job.type}</span> 
-                             <span>.</span> 
-                             <span>${job.sal}</span> </div>
+                                    <span>${job.loc}</span> <span>.</span> <span>${job.type}</span> <span>.</span> <span>${job.sal}</span>
+                                </div>
 
-                                <button onclick="toggleApplied(${job.id})" 
-                               class="mb-4 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-tight transition-all border 
-                               ${job.applied ? 'bg-brandPurple border-brandPurple text-white': 'bg-gray-50 text-black border-gray-200 shadow-sm hover:bg-gray-100'}
-">
-                                ${job.applied ? '✓ Applied' : 'Not Applied'} </button>
+                                <button class="mb-4 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-tight transition-all border ${badgeClass}">
+                                    ${badgeText}
+                                </button>
 
                                 <p class="text-sm font-medium text-gray-700 mb-6 leading-relaxed max-w-3xl">${job.desc}</p>
                                 
