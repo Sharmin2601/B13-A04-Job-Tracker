@@ -67,11 +67,22 @@
             </div>
 
             
-                <div class="flex gap-8 border-b border-[#E9EDF7] mb-4 overflow-x-auto no-scrollbar">
-                    <button onclick="switchTab('all')" id="tab-all" class="pb-4 text-sm font-medium active-tab whitespace-nowrap transition-all">All</button>
-                    <button onclick="switchTab('interview')" id="tab-interview" class="pb-4 text-sm font-medium text-textGray whitespace-nowrap transition-all">Interview</button>
-                    <button onclick="switchTab('rejected')" id="tab-rejected" class="pb-4 text-sm font-medium text-textGray whitespace-nowrap transition-all">Rejected</button>
-                </div>
+                <div class="flex gap-3 mb-6 justify-start">
+    <button onclick="switchTab('all')" id="tab-all"
+    class="px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-blue-500 text-white">
+    All
+</button>
+
+    <button onclick="switchTab('interview')" id="tab-interview"
+    class="px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-gray-100 text-gray-600">
+    Interview
+</button>
+
+<button onclick="switchTab('rejected')" id="tab-rejected"
+    class="px-6 py-2 rounded-lg text-sm font-semibold transition-all bg-gray-100 text-gray-600">
+    Rejected
+</button>
+</div>
 
                 <div id="jobList" class="flex flex-col h-full justify-center">
                     </div>
@@ -92,12 +103,35 @@
         let jobsData = [...initialJobs];
         let currentTab = 'all';
 
-        function switchTab(tab) {
-            currentTab = tab;
-            document.querySelectorAll('button[id^="tab-"]').forEach(btn => btn.classList.remove('active-tab'));
-            document.getElementById(`tab-${tab}`).classList.add('active-tab');
-            render();
+       function switchTab(tab) {
+    currentTab = tab;
+
+    const tabs = ['all', 'interview', 'rejected'];
+
+    tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+
+        // ❌ DO NOT reset full className
+        btn.classList.remove(
+            'bg-blue-500', 'bg-green-500', 'bg-red-500',
+            'text-white', 'bg-gray-100', 'text-gray-600'
+        );
+
+        if (t === tab) {
+            if (t === 'all') {
+                btn.classList.add('bg-blue-500', 'text-white');
+            } else if (t === 'interview') {
+                btn.classList.add('bg-green-500', 'text-white');
+            } else if (t === 'rejected') {
+                btn.classList.add('bg-red-500', 'text-white');
+            }
+        } else {
+            btn.classList.add('bg-gray-100', 'text-gray-600');
         }
+    });
+
+    render();
+}
 
         function deleteJob(id) {
             jobsData = jobsData.filter(job => job.id !== id);
@@ -125,7 +159,10 @@
 
         function render() {
             const container = document.getElementById('jobList');
-            const filtered = jobsData.filter(j => currentTab === 'all' ? true : j.status === currentTab);
+           let filtered = jobsData.filter(j => currentTab === 'all' ? true : j.status === currentTab);
+
+           const allApplied = jobsData.length > 0 && jobsData.every(j => j.applied);
+           if (allApplied) {    filtered = [];}
             document.getElementById('stat-total').innerText = jobsData.length;
             document.getElementById('stat-interview').innerText = jobsData.filter(j => j.status === 'interview').length;
             document.getElementById('stat-rejected').innerText = jobsData.filter(j => j.status === 'rejected').length;
@@ -168,8 +205,9 @@
                              <span>${job.sal}</span> </div>
 
                                 <button onclick="toggleApplied(${job.id})" 
-                                class="mb-4 px-3 py-1 rounded-md text-xs font-black uppercase tracking-tight transition-all border
-                                ${job.applied ? 'bg-brandPurple border-brandPurple text-white' : 'border-textGray/30 text-textGray hover:border-brandPurple hover:text-brandPurple'}">
+                               class="mb-4 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-tight transition-all border 
+                               ${job.applied ? 'bg-brandPurple border-brandPurple text-white': 'bg-gray-50 text-black border-gray-200 shadow-sm hover:bg-gray-100'}
+">
                                 ${job.applied ? '✓ Applied' : 'Not Applied'} </button>
 
                                 <p class="text-sm font-medium text-gray-700 mb-6 leading-relaxed max-w-3xl">${job.desc}</p>
