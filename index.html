@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker | Responsive Empty State</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Geist', 'sans-serif'] },
+                    colors: {
+                        brandBlue: '#002C5C',
+                        brandPurple: '#4318FF',
+                        brandGreen: '#05CD99',
+                        brandRed: '#EE5D50',
+                        bgLight: '#F4F7FE',
+                        textGray: '#A3AED0'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .active-tab { color: #3B82F6; border-bottom: 4px solid #3B82F6; }
+        .figma-card { box-shadow: 0px 18px 40px rgba(112, 144, 176, 0.08); }
+        .job-row { border-bottom: 1px solid #E9EDF7; position: relative; }
+        .job-row:last-child { border-bottom: none; }
+        .animate-fade { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        
+        .icon-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+
+<body class="bg-bgLight min-h-screen font-sans antialiased p-4 md:p-10">
+    <div class="max-w-5xl mx-auto">
+        
+        <header class="mb-12">
+            <h1 class="text-3xl font-extrabold text-brandBlue tracking-tight mb-6">Job Application Tracker</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded border-[#E9EDF7] flex flex-col items-center">
+                    <p class="font-black text-sm font-medium text-gray-700 mb-1">Total</p>
+                    <p id="stat-total" class="text-3xl font-black text-brandBlue">0</p>
+                </div>
+                <div class="bg-white p-6 rounded border-[#E9EDF7] flex flex-col items-center">
+                    <p class="font-black text-sm font-medium text-gray-700 mb-1">Interview</p>
+                    <p id="stat-interview" class="text-3xl font-black text-brandGreen">0</p>
+                </div>
+                <div class="bg-white p-6 rounded border-[#E9EDF7] flex flex-col items-center">
+                    <p class="font-black text-sm font-medium text-gray-700 mb-1">Rejected</p>
+                    <p id="stat-rejected" class="text-3xl font-black text-brandRed">0</p>
+                </div>
+            </div>
+        </header>
+
+    
+</body>
+</html>
