@@ -95,6 +95,44 @@
             { id: 7, company: "StartupXYZ", pos: "Full Stack Engineer", loc: "Remote", type: "Full-time", sal: "$120,00-$160,000", desc: "Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.", status: 'all', applied: false },
             { id: 8, company: "TechCorp Industries", pos: "Senior Frontend Developer", loc: "San Francisco, CA", type: "Full-time", sal: "$130,000 - $175,000", desc: "We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.", status: 'all', applied: false }
         ];
+        let jobsData = [...initialJobs];
+        let currentTab = 'all';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('button[id^="tab-"]').forEach(btn => btn.classList.remove('active-tab'));
+            document.getElementById(`tab-${tab}`).classList.add('active-tab');
+            render();
+        }
+
+        function deleteJob(id) {
+            jobsData = jobsData.filter(job => job.id !== id);
+            render();
+        }
+
+        function toggleApplied(id) {
+            const job = jobsData.find(j => j.id === id);
+            if (job) job.applied = !job.applied;
+            render();
+        }
+
+        function updateStatus(id, newStatus) {
+            const job = jobsData.find(j => j.id === id);
+            if (job) {
+                job.status = (job.status === newStatus) ? 'all' : newStatus;
+            }
+            render();
+        }
+
+        function resetJobs() {
+            jobsData = [...initialJobs];
+            render();
+        }
+
+        function render() {
+            const container = document.getElementById('jobList');
+            const filtered = jobsData.filter(j => currentTab === 'all' ? true : j.status === currentTab);
+        }
     </script>    
    
 </body>
