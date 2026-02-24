@@ -124,7 +124,6 @@
         function render() {
             const container = document.getElementById('jobList');
             
-            // Logic: On "All" tab, show all jobs until EVERY job is either 'interview' or 'rejected'
             const allProcessed = jobsData.length > 0 && jobsData.every(j => j.status !== 'all');
             
             let filtered;
