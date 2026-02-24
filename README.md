@@ -12,6 +12,11 @@
     Answer: Event bubbling is a mechanism in the DOM where, when an event is triggered on an element, it bubbles upward through the DOM tree from the child element to the parent elements.
 
 ### 4. What is Event Delegation in JavaScript? Why is it useful?
-
+   Answer: Event Delegation is a mechanism where we can attach a single event listener to a parent element instead of adding separate listeners to multiple child elements.
+   Event delegation is useful because of
+   - it handles dynamic Elements Easily
+   - it makes my code cleaner and faster
+   - its improved performance.
 
 ### 5. What is the difference between preventDefault() and stopPropagation() methods?
+    
